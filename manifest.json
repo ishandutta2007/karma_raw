@@ -1,0 +1,87 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "10.32.0.18303",
+  "name": "Karma | Online shopping, but better",
+  "short_name": "Karma",
+  "description": "Shop Smarter: Compare Prices, Get Coupons, Price alerts & Earn Cashback!",
+  "author": "Karma",
+  "action": {
+    "default_icon": {
+      "19": "img/logo_prod_supported.png",
+      "38": "img/logo_prod_supported.png"
+    },
+    "default_title": "Add to Karma"
+  },
+  "icons": {
+    "16": "img/logo_prod_supported.png",
+    "48": "img/logo_prod_supported.png",
+    "128": "img/logo_prod_supported.png"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "fonts/*.*",
+        "img/*.*",
+        "js/*.*",
+        "lottie/*.*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.worker.js"
+  },
+  "homepage_url": "https://www.karmanow.com",
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ],
+    "matches": [
+      "*://karmanow.com/*",
+      "*://*.karmanow.com/*"
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "scripting",
+    "webRequest"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://*.karmanow.com/*"
+      ],
+      "js": [
+        "js/authorizationListener.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://*/*.json",
+        "*://*/*.pdf",
+        "*://*/*.jpeg",
+        "*://*/*.jpg",
+        "*://*/*.png",
+        "*://*/*.svg"
+      ],
+      "js": [
+        "js/shoptagrJQ.bundle.js",
+        "js/shoptagrInterpreter.bundle.js",
+        "js/inject.bundle.js"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
+}
